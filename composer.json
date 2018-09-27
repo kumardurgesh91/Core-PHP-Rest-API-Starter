@@ -1,0 +1,13 @@
+{
+    "name": "php-rest-api/starter",
+    "description": "Core PHP rest API starter",
+    "require": {
+        "lcobucci/jwt": "3.2"
+    },
+    "authors": [
+        {
+            "name": "DK",
+            "email": "kumardurgeshpatel@gmail.com"
+        }
+    ]
+}
