@@ -1,12 +1,13 @@
 <?php
 
-require('env.php');
-require 'config.php';
-require "db.config.php";
+require_once 'env.php';
+require_once 'config.php';
+require_once 'db.config.php';
+require_once 'tables.php';
 
-require DIR_PATH . "/lib/Response.php";
-require DIR_PATH . '/lib/Utils.php';
-require_once DIR_PATH . "/lib/ErrorMessage.php";
+require_once DIR_PATH . '/lib/Response.php';
+require_once DIR_PATH . '/lib/Utils.php';
+require_once DIR_PATH . '/lib/ErrorMessage.php';
 
 if (ENV === 'prod') {
     error_reporting(0);

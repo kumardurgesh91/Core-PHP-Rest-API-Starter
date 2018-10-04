@@ -65,10 +65,10 @@ class Validation {
         if(empty($password)) {
             throw ValidationException('PASSWORD_EMPTY');
         }
-        if(strlen($name) < 6) {
+        if(strlen($password) < 6) {
             throw ValidationException('PASSWORD_MIN_LENGTH');
         }
-        if(strlen($name) > 60) {
+        if(strlen($password) > 60) {
             throw ValidationException('PASSWORD_MAX_LENGTH');
         }
         return true;

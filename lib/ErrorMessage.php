@@ -35,7 +35,7 @@ class ErrorMessage {
     public $EMAIL_INVALID = array('message' => 'email address is invalid', 'code' => 2002);
     public $PASSWORD_EMPTY = array('error' => 'Password missing', 'code' => 2003);
     public $FIRST_NAME_EMPTY = array('error' => 'First name missing', 'code' => 2004);
-    
+    public $EMAIL_ALREADY_EXIST = array('error' => 'Email id already exist', 'code' => 2005);
     /**
      * Image upload error
      * Start with 5100

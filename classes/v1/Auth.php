@@ -45,30 +45,29 @@ class Auth extends Base {
         }
         $t = (new Parser())->parse((string) $token);
         $data = new ValidationData();
-        $data->setIssuer(TOKEN_ISSURE)
-                ->setAudience(TOKEN_AUDIENCE)
-                ->setId(TOKEN_ID, true);
+        $data->setIssuer(TOKEN_ISSURE);
+        $data->setAudience(TOKEN_AUDIENCE);
+        $data->setId(TOKEN_ID, true);
         if ($t->validate($data) === false) {
             throw new Exception('token is not valid');
         }
         return $t->getClaim('id');
     }
-    
+
     public function getUserFromToken($token) {
         if (empty($token)) {
             throw new Exception('token must be required to extract id');
         }
         $t = (new Parser())->parse((string) $token);
         $data = new ValidationData();
-        $data->setIssuer(TOKEN_ISSURE)
-                ->setAudience(TOKEN_AUDIENCE)
-                ->setId(TOKEN_ID, true);
+        $data->setIssuer(TOKEN_ISSURE);
+        $data->setAudience(TOKEN_AUDIENCE);
+        $data->setId(TOKEN_ID, true);
         if ($t->validate($data) === false) {
             throw new Exception('token is not valid');
         }
         return $t->getClaim('user');
     }
-    
 
     /**
      * 
@@ -103,25 +102,37 @@ class Auth extends Base {
     public function login() {
         echo 'Login';
     }
-    
+
     public function signUp() {
-        
+
         $first_name = isset($this->bodyParams['first_name']) ? $this->bodyParams['first_name'] : '';
         $last_name = isset($this->bodyParams['last_name']) ? $this->bodyParams['last_name'] : '';
         $email = isset($this->bodyParams['email']) ? $this->bodyParams['email'] : '';
         $password = isset($this->bodyParams['password']) ? $this->bodyParams['password'] : '';
-        
+
         try {
             $this->validation->email($email);
             $this->validation->firstName($first_name);
             $this->validation->lastName($last_name);
             $this->validation->password($password);
+
+            $this->db->query('IF EXISTS (select 1 from ' . TBL_USERS . ' where email = ? ) THEN'
+                    . ' SIGNAL SQLSTATE "23000" SET MYSQL_ERRNO = "1452", MESSAGE_TEXT = "EMAIL_ALREADY_EXIST";'
+                    . 'ELSE insert into ' . TBL_USERS . ' (email, first_name, last_name, password, created_at, updated_at) values(?, ?, ?, ?, ?, ?);'
+                    . 'END IF;', array($email, $email, $first_name, $last_name, $password, CURRENT_MILISECOND, CURRENT_MILISECOND));
+            $user = $this->db->query("select * from " . TBL_USERS . " where email = ? LIMIT 1", array($email))->getFirst();
+            if ($user == null) {
+                return $this->response->jsonResponse($this->error->UNKNOWN_ERROR, 500);
+            }
+
+            $token = $this->createToken($user, $user->id);
+            $u = $this->getUserFromToken($token);
+            return $this->response->jsonResponse(array('token' => $token), 200);
         } catch (ValidationException $ex) {
-            return $this->response->jsonResponse($ex->getError(), 409);
+            return $this->response->jsonResponse($ex->getError(), 400);
         } catch (Exception $ex) {
-            return $this->response->jsonResponse($ex->getError(), 409);
+            return $this->response->jsonResponse($ex->getError(), 500);
         }
-        
     }
 
 }

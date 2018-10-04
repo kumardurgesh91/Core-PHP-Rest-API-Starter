@@ -10,10 +10,12 @@ class QueryException extends Exception {
         //echo $this->getMessage();
         global $error;
         if ($this->getCode() != 0) {
-            switch ($this->getCode()) {
-                
-                default:
-                    if (ENV === 'dev') {
+
+            global $error;
+            if ($error->{$this->getMessage()} != null) {
+                return $error->{$this->getMessage()};
+            } else {
+                if (ENV === 'dev') {
                         return $this->getMessage();
                     } else if (ENV === 'test') {
                         return $this->getMessage();
@@ -21,25 +23,36 @@ class QueryException extends Exception {
                         return $error->UNKNOWN_QUERY_ERROR;
                     }
             }
+//            switch ($this->getCode()) {
+//                
+//                default:
+//                    if (ENV === 'dev') {
+//                        return $this->getMessage();
+//                    } else if (ENV === 'test') {
+//                        return $this->getMessage();
+//                    } else {
+//                        return $error->UNKNOWN_QUERY_ERROR;
+//                    }
+//            }
         }
 
-        switch ($this->getMessage()) {
-
-            case 'REGISTRATION_FAILED':
-                return $error->REGISTRATION_FAILED;
-                break;
-            case 'FAILED_TO_UPDATE_PROFILE_PIC':
-                return $error->FAILED_TO_UPDATE_PROFILE_PIC;
-                break;
-            default:
-                if (ENV === 'dev') {
-                    return $this->getMessage();
-                } else if (ENV === 'test') {
-                    return $this->getMessage();
-                } else {
-                    return $error->UNKNOWN_QUERY_ERROR;
-                }
-        }
+//        switch ($this->getMessage()) {
+//
+//            case 'REGISTRATION_FAILED':
+//                return $error->REGISTRATION_FAILED;
+//                break;
+//            case 'FAILED_TO_UPDATE_PROFILE_PIC':
+//                return $error->FAILED_TO_UPDATE_PROFILE_PIC;
+//                break;
+//            default:
+//                if (ENV === 'dev') {
+//                    return $this->getMessage();
+//                } else if (ENV === 'test') {
+//                    return $this->getMessage();
+//                } else {
+//                    return $error->UNKNOWN_QUERY_ERROR;
+//                }
+//        }
     }
 
 }

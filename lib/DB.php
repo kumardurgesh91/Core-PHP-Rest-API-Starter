@@ -2,7 +2,7 @@
 
 class DB {
 
-    private $_pdo, $_query, $_count = 0, $_result = array(), $_lastID = NULL, $_errors = array(), $dbuser, $dbname, $dbpass, $dbhost;
+    private $_pdo, $_query, $_count = 0, $_results = array(), $_lastID = NULL, $_errors = array(), $dbuser, $dbname, $dbpass, $dbhost;
 
     public function __construct($con_data = array()) {
         $req_keys = array('dbname', 'dbuser', 'dbpass', 'dbhost');
@@ -36,6 +36,7 @@ class DB {
         $this->_count = 0;
         $this->_lastID = null;
         try {
+            
             $this->_query = $this->_pdo->prepare($query);
             if (count($params)) {
                 $i = 1;
@@ -71,7 +72,7 @@ class DB {
     }
 
     public function lastInsertedId() {
-        return $this->_lastId;
+        return $this->_lastID;
     }
 
     public function get($table, $conditions = NULL, $limit = NULL) {
@@ -81,6 +82,10 @@ class DB {
             $this->query('SELECT * FROM `' . $table . '`');
         }
         return $this;
+    }
+    
+    public function getResult() {
+        return $this->_results;
     }
 
     public function getFirst() {
