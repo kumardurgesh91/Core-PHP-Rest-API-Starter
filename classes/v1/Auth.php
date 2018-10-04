@@ -103,6 +103,26 @@ class Auth extends Base {
     public function login() {
         echo 'Login';
     }
+    
+    public function signUp() {
+        
+        $first_name = isset($this->bodyParams['first_name']) ? $this->bodyParams['first_name'] : '';
+        $last_name = isset($this->bodyParams['last_name']) ? $this->bodyParams['last_name'] : '';
+        $email = isset($this->bodyParams['email']) ? $this->bodyParams['email'] : '';
+        $password = isset($this->bodyParams['password']) ? $this->bodyParams['password'] : '';
+        
+        try {
+            $this->validation->email($email);
+            $this->validation->firstName($first_name);
+            $this->validation->lastName($last_name);
+            $this->validation->password($password);
+        } catch (ValidationException $ex) {
+            return $this->response->jsonResponse($ex->getError(), 409);
+        } catch (Exception $ex) {
+            return $this->response->jsonResponse($ex->getError(), 409);
+        }
+        
+    }
 
 }
 

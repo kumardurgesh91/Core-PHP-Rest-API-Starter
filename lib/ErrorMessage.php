@@ -24,33 +24,17 @@ class ErrorMessage {
     public $TOKEN_EXPIRED = array('error' => 'auth token expired or invalid', 'code' => 6);
     public $TOKEN_INVALID = array('error' => 'auth token invalid', 'code' => 7);
     public $UPDATED_AT_MISSING = array('error' => 'updated at missing', 'code' => 8);
-    public $INVALID_ACTIVATION_STATUS = array('error' => 'wrong activation status', 'code' => 9);
 
-    
-    /**
-     * Missing or empty in request body
-     * Start with 2000
-     */
-    public $EMAIL_MISSING = array('message' => 'email is required', 'code' => 2000);
-    public $PASSWORD_MISSING = array('error' => 'Password missing', 'code' => 2003);
-    public $LNAME_MISSING = array('error' => 'Sur name missing', 'code' => 2005);
-    public $FNAME_MISSING = array('error' => 'First name missing', 'code' => 2006);
-    public $PROFILE_PIC_MISSING = array('error' => 'Profile pic missing', 'code' => 2007);
-    public $PHONE_NO_MISSING = array('error' => 'phone number missing', 'code' => 2012);
-    public $ISD_CODE_MISSING = array('error' => 'ISD code missing', 'code' => 2013);
-    
+
     /**
      * Validation Errors
      * Start with 3000
      */
-    public $CODE_INVALID = array('error' => 'invitation code is invalid', 'code' => 3000);
-    public $EMAIL_INVALID = array('message' => 'email address is invalid', 'code' => 3001);
-    public $INVALID_FIRST_NAME = array('error' => 'First name must be between 4 to 48 charecter', 'code' => 3002);
-    public $INVALID_SUR_NAME = array('error' => 'Sur name must be between 4 to 48 charecter', 'code' => 3004);
-    public $INVALID_COUNTRY = array('error' => 'Invalid country', 'code' => 3005);
-    public $INVALID_STATE = array('error' => 'Invalid state', 'code' => 3006);
-    public $INVALID_CITY = array('error' => 'Invalid city', 'code' => 3007);
-    public $UNKNOWN_VALIDATION_ERROR = array('error' => 'Can not process request, please try after some time', 'code' => 3008);
+    public $UNKNOWN_VALIDATION_ERROR = array('error' => 'Can not process request, please try after some time', 'code' => 2000);
+    public $EMAIL_EMPTY = array('message' => 'email is required', 'code' => 2001);
+    public $EMAIL_INVALID = array('message' => 'email address is invalid', 'code' => 2002);
+    public $PASSWORD_EMPTY = array('error' => 'Password missing', 'code' => 2003);
+    public $FIRST_NAME_EMPTY = array('error' => 'First name missing', 'code' => 2004);
     
     /**
      * Image upload error

@@ -58,7 +58,7 @@ class RouteHandler extends Rest {
     public function execute() {
         $route = $_REQUEST['request'];
         $method = $this->getRequestMethod();
-
+        
         $isRouteMatched = false;
         global $response;
         foreach ($this->apis as $request) {
@@ -68,8 +68,8 @@ class RouteHandler extends Rest {
             $patternAsRegex = $this->getRegex(ltrim($request['url'], '/'));
 
             if (!!$patternAsRegex && preg_match($patternAsRegex, $route, $matches)) {
-                include_once DIR_PATH . '/Controllers/Base.php';
-                foreach (glob(DIR_PATH . "/Controllers/*.php") as $filename) {
+                include_once DIR_PATH . '/classes/Base.php';
+                foreach (glob(DIR_PATH . "/classes/v1/*.php") as $filename) {
                     include_once $filename;
                 }
                 

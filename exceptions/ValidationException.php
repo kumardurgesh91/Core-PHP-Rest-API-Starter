@@ -7,9 +7,11 @@
  */
 
 class ValidationException extends Exception {
+
     public function __construct($message, $code = 0, Exception $previous = null) {
         parent:: __construct($message, $code, $previous);
     }
+
     /**
      * 
      * @global type $error
@@ -17,14 +19,22 @@ class ValidationException extends Exception {
      */
     public function getError() {
         global $error;
-        switch ($this->getMessage()) {
-            case 'EMAIL_INVALID' :
-            return $error->EMAIL_INVALID;
-            break;
-            
-            default :
+        if($error->{$this->getMessage()} != null) {
+            return $error->{$this->getMessage()};
+        } else {
             return $error->UNKNOWN_VALIDATION_ERROR;
         }
+        
+//        switch ($this->getMessage()) {
+//            case 'EMAIL_INVALID' :
+//                return $error->EMAIL_INVALID;
+//                break;
+//
+//            default :
+//                return $error->UNKNOWN_VALIDATION_ERROR;
+//        }
     }
+
 }
+
 ?>

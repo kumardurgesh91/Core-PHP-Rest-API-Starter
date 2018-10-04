@@ -6,6 +6,7 @@ require "db.config.php";
 
 require DIR_PATH . "/lib/Response.php";
 require DIR_PATH . '/lib/Utils.php';
+require_once DIR_PATH . "/lib/ErrorMessage.php";
 
 if (ENV === 'prod') {
     error_reporting(0);
@@ -16,4 +17,5 @@ if (ENV === 'prod') {
 }
 $response = new Response();
 $utils = new Utils();
+$error = new ErrorMessage();
 ?>

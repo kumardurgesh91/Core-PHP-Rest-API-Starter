@@ -1,5 +1,5 @@
 <?php
-require DIR_PATH . '/Exceptions/ValidationException.php';
+require_once DIR_PATH . '/exceptions/ValidationException.php';
 
 class Validation {
     /**
@@ -7,63 +7,72 @@ class Validation {
      * @param type $email
      * @return boolean
      */
-    public function validateEmail($email = '') {
-        if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return true;
+    public function email($email = '') {
+        if(empty($email)) {
+            throw new ValidationException('EMAIL_EMPTY');
         }
-        throw new ValidationException('EMAIL_INVALID');
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new ValidationException('EMAIL_INVALID');
+        }
+        return true;
     }
-
-
+    
     /**
      * 
-     * @param type $code
+     * @param type $name
      * @return boolean
+     * @throws type
      */
-    public function validateInvitationCode($code = 0) {
-       
-        if(is_numeric($code) && $code > 9999999 && $code < 100000000){
-            return true;
+    public function firstName($name = '') {
+        if(empty($name)) {
+            throw new ValidationException('FIRST_NAME_EMPTY');
         }
-        
-        throw new ValidationException('CODE_INVALID');
+        if(strlen($name) < 3) {
+            throw new ValidationException('FIRST_NAME_MIN_LENGTH');
+        }
+        if(strlen($name) > 60) {
+            throw new ValidationException('FIRST_NAME_MAX_LENGTH');
+        }
+        return true;
     }
     
-    public function validateDesire($invi_desire){
-        $expected_desire=array(1,2,3,4);
-        if(!is_array($invi_desire)){
-            throw new ValidationException('DESIRE_MUST_BE_ARRAY');
+    /**
+     * 
+     * @param type $name
+     * @return boolean
+     * @throws type
+     */
+    public function lastName($name = '') {
+        if(empty($name)) {
+            throw new ValidationException('LAST_NAME_EMPTY');
         }
-        if (count(array_intersect($expected_desire, $invi_desire)) != count($invi_desire)) {
-            throw new ValidationException('DESIRE_MUST_BE_BETWEEN_1_4');
+        if(strlen($name) < 3) {
+            throw new ValidationException('LAST_NAME_MIN_LENGTH');
         }
-
-        foreach ($invi_desire as $value) {
-           if(!is_int($value)){
-            throw new ValidationException('DESIRE_ID_MUST_BE_INTEGER');
+        if(strlen($name) > 60) {
+            throw new ValidationException('LAST_NAME_MAX_LENGTH');
         }
+        return true;
     }
-    } //function validateDesire() ends
-
     
-    public function validateBreakAwayiID($breakawayi_id) {
-        if(empty($breakawayi_id)) {
-            throw new ValidationException('INVALID_BREAKAWAY_ID');
+    /**
+     * 
+     * @param type $password
+     * @return boolean
+     * @throws type
+     */
+    public function password($password = '') {
+        if(empty($password)) {
+            throw ValidationException('PASSWORD_EMPTY');
         }
-        if(strlen($breakawayi_id) < 4 || strlen($breakawayi_id) > 32) {
-            throw new ValidationException('BREAKAWAYI_ID_LENGTH_INVALID');
+        if(strlen($name) < 6) {
+            throw ValidationException('PASSWORD_MIN_LENGTH');
         }
-    } // function validateBreakAwayiID() ends
-
-
-    public function validatePhoneNo($phone_no){
-        
-        if(!preg_match("/^[0-9]{10}$/", $phone_no)) {
-           throw new ValidationException('PHONE_NUMBER_MUST_BE_15_DIGITE');
-       }
-    } //function validatePhoneNumber() ends
-
-
+        if(strlen($name) > 60) {
+            throw ValidationException('PASSWORD_MAX_LENGTH');
+        }
+        return true;
+    }
 
 }
 ?>
